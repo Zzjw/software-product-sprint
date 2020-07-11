@@ -16,6 +16,7 @@
  * Adds a random greeting to the page.
  */
 function addRandomGreeting() {
+  console.log("click to add random greeting!");
   const greetings =
       ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
 
@@ -26,3 +27,7 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+// function addLog(message) {
+//     console.log(message);
+// }
