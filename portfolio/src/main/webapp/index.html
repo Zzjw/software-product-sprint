@@ -2,17 +2,44 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Junwei's Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getCommentList()">
     <div id="content">
-      <h1>My Portfolio</h1>
+      <h1>Junwei Zhao</h1>
+      <img src="images/luffy.jpeg" id="avatar"/>
+      <br/>
+      <a href="https://github.com/Zzjw/">github link</a>
       <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+      <!-- <p>Click here to get a random message:</p>
+      <button onclick="addRandomGreeting()">Hello</button> -->
+      <!-- <button onclick="addGreeting()">Greet</button>
+      <div id="greeting-container"></div> -->
+      <!-- <button onclick="getComment()">Load Comment </button> -->
+      <p>Junior in SYSU</p>
+      <img src="images/sysu.png" id="school"/>
+      <p>Programer</p>
+      <img src="images/1.gif" width="100px" height="100px"/>
+      <p>Gamer</p>
+      <img src="images/game.jpg" width="100px"/>
+      <b><p class="note">"ONE PIECE Pirate Warriors 4" from my girlfriend</p></b>
+      <p>Fan of "One Piece"</p>
+      <img src="images/onepiece.png" width="100px"/>
+
+      <hr/>
+      <h2>COMMENT AREA</h2>
+      <ul id="comment-container"></ul>
+      <hr/>
+      <form action="/data" method="POST">
+        <p>Welcome to comment!</p>
+        <textarea name="name">input name</textarea>
+        <br/><br/>
+        <textarea name="comment">input comment</textarea>
+        <br/>
+        <button>Submit</button>
+      </form>
     </div>
   </body>
 </html>
