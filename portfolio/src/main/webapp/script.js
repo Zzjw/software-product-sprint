@@ -40,3 +40,26 @@ async function addGreeting() {
     const quote = await response.text();
     document.getElementById('greeting-container').innerText = quote;
 }
+
+function getComment() {
+  fetch('/data').then(response => response.json()).then((comment) => {
+    // stats is an object, not a string, so we have to
+    // reference its fields to create HTML content
+
+    const commentListElement = document.getElementById('comment-container');
+    commentListElement.innerHTML = '';
+    commentListElement.appendChild(
+        createListElement('Send Time: ' + comment.sendTime));
+    commentListElement.appendChild(
+        createListElement('Name: ' + comment.name));
+    commentListElement.appendChild(
+        createListElement('Comment: ' + comment.comment));
+  });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}
