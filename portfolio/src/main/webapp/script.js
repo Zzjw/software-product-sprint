@@ -63,3 +63,17 @@ function createListElement(text) {
   liElement.innerText = text;
   return liElement;
 }
+
+function getCommentList() {
+  fetch('/data').then(response => response.json()).then((comments) => {
+
+    // Build the list of history entries.
+    const historyComments = document.getElementById('comment-container');
+    comments.comments.forEach((value) => {
+      console.log(value);
+      historyComments.appendChild(createListElement("Send Time: " + value.sendTime ));
+      historyComments.appendChild(createListElement("Name: " + value.name ));
+      historyComments.appendChild(createListElement("Comment: " + value.comment ));
+    });
+  });
+}

@@ -1,28 +1,18 @@
 package com.google.sps.data;
 
+import com.google.sps.data.CommentValue;
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-public final class CommentData {
+public class CommentData {
 
-  private final Date sendTime;
-  private final String name;
-  private final String comment;
+  private final List<CommentValue> comments = new ArrayList<>();
 
-  public CommentData(Date sendTime, String name, String comment) {
-    this.sendTime = sendTime;
-    this.name = name;
-    this.comment = comment;
+  public CommentData() {
   }
 
-  public Date getSendTime() {
-    return sendTime;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public String getComment() {
-    return comment;
+  public void addCommentValue(CommentValue commentValue) {
+    comments.add(commentValue);
   }
 }
