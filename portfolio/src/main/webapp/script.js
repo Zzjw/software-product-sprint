@@ -68,12 +68,15 @@ function getCommentList() {
   fetch('/data').then(response => response.json()).then((comments) => {
 
     // Build the list of history entries.
-    const historyComments = document.getElementById('comment-container');
-    comments.comments.forEach((value) => {
+    const MyComments = document.getElementById('comment-container');
+    comments.forEach((value) => {
       console.log(value);
-      historyComments.appendChild(createListElement("Send Time: " + value.sendTime ));
-      historyComments.appendChild(createListElement("Name: " + value.name ));
-      historyComments.appendChild(createListElement("Comment: " + value.comment ));
+      MyComments.appendChild(createListElement("Send Time: " + value.sendTime ));
+      MyComments.appendChild(createListElement("Name: " + value.name ));
+      const commentText = document.createElement('text');
+      commentText.innerText = ("Comment: " + value.comment);
+      commentText.style.marginBottom = "20px";
+      MyComments.appendChild(commentText);
     });
   });
 }

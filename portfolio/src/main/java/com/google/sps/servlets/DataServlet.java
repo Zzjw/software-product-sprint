@@ -16,13 +16,24 @@ package com.google.sps.servlets;
 
 import com.google.sps.data.CommentData;
 import com.google.sps.data.CommentValue;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+
+
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -32,10 +43,33 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("application/json");
-    String json = new Gson().toJson(commentData);
-    response.getWriter().println(json);
-    System.err.println("Json: " + json);
+    // response.setContentType("application/json");
+    // String json = new Gson().toJson(commentData);
+    // response.getWriter().println(json);
+    // System.err.println("Json: " + json);
+
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    List<CommentValue> comments = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+    //   long id = entity.getKey().getId();
+    //   String title = (String) entity.getProperty("title");
+    //   long timestamp = (long) entity.getProperty("timestamp");
+      Date sendTime = (Date) entity.getProperty("date");
+      String name = (String) entity.getProperty("name");
+      String comment = (String) entity.getProperty("comment");
+
+      CommentValue commentValue = new CommentValue(sendTime, name, comment);
+      comments.add(commentValue);
+    }
+
+    Gson gson = new Gson();
+
+    response.setContentType("application/json;");
+    response.getWriter().println(gson.toJson(comments));
   }
 
   @Override
@@ -48,12 +82,14 @@ public class DataServlet extends HttpServlet {
     System.err.println("name: " + name);
     System.err.println("comment" + comment);
 
-    CommentValue commentValue = new CommentValue(sendTime, name, comment);
-    commentData.addCommentValue(commentValue);
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("comment", comment);
+    commentEntity.setProperty("date", sendTime);
+    commentEntity.setProperty("timestamp", System.currentTimeMillis());
 
-    // Send the JSON as the response
-    response.setContentType("application/json;");
-    response.getWriter().println(commentData);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
 
     response.sendRedirect("/index.html");
   }
