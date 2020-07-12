@@ -28,6 +28,15 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
-// function addLog(message) {
-//     console.log(message);
-// }
+/**
+ * Add a greeting from server
+ */
+async function addGreeting() {
+    console.log("click to greet!");
+    // fetch('/data').then(response => response.text()).then(queto => {
+    //     document.getElementById('greeting-container').innerText = quote;
+    // })
+    const response = await fetch('/data');
+    const quote = await response.text();
+    document.getElementById('greeting-container').innerText = quote;
+}
