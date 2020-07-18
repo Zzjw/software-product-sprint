@@ -78,11 +78,12 @@ function getCommentList() {
           commentText.innerText = ("Comment: " + value.comment);
           commentText.style.marginBottom = "20px";
           MyComments.appendChild(commentText);
+          console.log(value.imageUrl);
           if (value.imageUrl != null && value.imageUrl != "") {
             const imageElement = document.createElement("img");
             imageElement.src = value.imageUrl;
-            imageElement.height = "20px";
-            imageElement.weight = "20px"
+            imageElement.height = 20;
+            imageElement.width = 20;
             MyComments.appendChild(imageElement);
           }
         });
