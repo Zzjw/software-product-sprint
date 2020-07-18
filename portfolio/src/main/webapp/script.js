@@ -83,5 +83,5 @@ function getCommentList() {
 }
 
 function handleResponse(e) {
-  window.alert(e);
+  window.alert(e.text());
 }
