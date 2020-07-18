@@ -17,15 +17,20 @@ public class CheckLoginStatusServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     UserService userService = UserServiceFactory.getUserService();
     Gson gson = new Gson();
-    response.setContentType("application/json;");
     if (userService.isUserLoggedIn()) {
+      response.setContentType("application/json;");
       LoginStatusJson loginStatusJson = new LoginStatusJson(1, "Has logged in!");
       String json = convertToJson(loginStatusJson);
       response.getWriter().println(json);
     } else {
-      LoginStatusJson loginStatusJson = new LoginStatusJson(0, "Please log in first!");
-      String json = convertToJson(loginStatusJson);
-      response.getWriter().println(json);
+      response.setContentType("text/html");
+      String urlToRedirectToAfterUserLogsIn = "/";
+      String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
+      response.getWriter().println("<p>Hello stranger.</p>");
+      response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
+//      LoginStatusJson loginStatusJson = new LoginStatusJson(0, "Please log in first!");
+//      String json = convertToJson(loginStatusJson);
+//      response.getWriter().println(json);
     }
   }
 
