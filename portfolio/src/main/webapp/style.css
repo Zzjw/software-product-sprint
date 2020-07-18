@@ -22,6 +22,10 @@
     margin-top: 5;
     font-size: 10px;
 }
+
+.hidden {
+    display: none;
+}
 /* .list li {
     float: left;
     display: inline;

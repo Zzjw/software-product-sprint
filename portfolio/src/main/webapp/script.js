@@ -78,9 +78,13 @@ function getCommentList() {
           commentText.innerText = ("Comment: " + value.comment);
           commentText.style.marginBottom = "20px";
           MyComments.appendChild(commentText);
-          const imageElement = document.createElement("img");
-          imageElement.src = value.imageUrl;
-          MyComments.appendChild(imageElement);
+          if (value.imageUrl != null && value.imageUrl != "") {
+            const imageElement = document.createElement("img");
+            imageElement.src = value.imageUrl;
+            imageElement.height = "20px";
+            imageElement.weight = "20px"
+            MyComments.appendChild(imageElement);
+          }
         });
       });
     }
