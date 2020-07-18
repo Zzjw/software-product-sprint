@@ -65,6 +65,7 @@ function createListElement(text) {
 }
 
 function getCommentList() {
+  fetch('/check').then(handleResponse);
   fetch('/data').then(response => response.json()).then((comments) => {
 
     // Build the list of history entries.
@@ -79,4 +80,8 @@ function getCommentList() {
       MyComments.appendChild(commentText);
     });
   });
+}
+
+function handleResponse(e) {
+  window.alert(e);
 }
