@@ -14,6 +14,9 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.users.User;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.sps.data.CommentData;
 import com.google.sps.data.CommentValue;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -75,6 +78,10 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
+    UserService userService = UserServiceFactory.getUserService();
+    User currentUser = userService.getCurrentUser();
+    System.err.println(currentUser);
+
     Date sendTime = new Date();
     String name = getParameter(request, "name", "");
     String comment = getParameter(request, "comment", "Hello!");
