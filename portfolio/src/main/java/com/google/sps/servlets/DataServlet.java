@@ -80,10 +80,10 @@ public class DataServlet extends HttpServlet {
     // Get the input from the form.
     UserService userService = UserServiceFactory.getUserService();
     User currentUser = userService.getCurrentUser();
-    System.err.println(currentUser);
 
     Date sendTime = new Date();
-    String name = getParameter(request, "name", "");
+//    String name = getParameter(request, "name", "");
+    String name = currentUser.getNickname();
     String comment = getParameter(request, "comment", "Hello!");
 
     System.err.println("name: " + name);
