@@ -82,7 +82,7 @@ function getCommentList() {
     }
     else {
       window.alert(value.hint);
-      fetch('/login');
+      window.location.href='/login';
       // const MyComments = document.getElementById('comment-container');
       // const hintText = document.createElement('text');
       // hintText.innerText = value.hint;
