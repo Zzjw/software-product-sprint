@@ -32,9 +32,8 @@
       <h2>COMMENT AREA</h2>
       <ul id="comment-container"></ul>
       <hr/>
-      <form action="/data" method="POST">
+      <form id="my-form" class="hidden" action="/data" method="POST" enctype="multipart/form-data">
         <p>Welcome to comment!</p>
-        <br/><br/>
         <textarea name="comment">input comment</textarea>
         <br/>
         <button>Submit</button>

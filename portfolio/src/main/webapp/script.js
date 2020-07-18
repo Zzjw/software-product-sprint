@@ -67,6 +67,7 @@ function createListElement(text) {
 function getCommentList() {
   fetch('/check').then(response => response.json()).then((value) => {
     if (value.ifLoggedIn == 1){
+      fetchBlobstoreUrlAndShowForm();
       fetch('/data').then(response => response.json()).then((comments) => {
         const MyComments = document.getElementById('comment-container');
         comments.forEach((value) => {
@@ -77,6 +78,9 @@ function getCommentList() {
           commentText.innerText = ("Comment: " + value.comment);
           commentText.style.marginBottom = "20px";
           MyComments.appendChild(commentText);
+          const imageElement = document.createElement("img");
+          imageElement.src = value.imageUrl;
+          MyComments.appendChild(imageElement);
         });
       });
     }
@@ -88,5 +92,18 @@ function getCommentList() {
       // hintText.innerText = value.hint;
       // MyComments.appendChild(hintText);
     }
+  });
+}
+
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+      return response.text();
+  })
+  .then((imageUploadUrl) => {
+    const messageForm = document.getElementById('my-form');
+    console.log((imageUploadUrl));
+    messageForm.action = imageUploadUrl;
+    messageForm.classList.remove('hidden');
   });
 }
