@@ -65,8 +65,7 @@ function createListElement(text) {
 }
 
 function getCommentList() {
-  // fetch('/check').then(response => response.json()).then((value) => {
-  //   if (value.ifLoggedIn == 1){
+  checkLoggedInStatus();
   fetchBlobstoreUrlAndShowForm();
   fetch('/data').then(response => response.json()).then((comments) => {
     const MyComments = document.getElementById('comment-container');
@@ -89,16 +88,6 @@ function getCommentList() {
       }
     });
   });
-
-    // else {
-    //   window.alert(value.hint);
-    //   window.location.href='/login';
-    //   // const MyComments = document.getElementById('comment-container');
-    //   // const hintText = document.createElement('text');
-    //   // hintText.innerText = value.hint;
-    //   // MyComments.appendChild(hintText);
-    // }
-  // });
 }
 
 function fetchBlobstoreUrlAndShowForm() {
@@ -111,5 +100,20 @@ function fetchBlobstoreUrlAndShowForm() {
     console.log((imageUploadUrl));
     messageForm.action = imageUploadUrl;
     messageForm.classList.remove('hidden');
+  });
+}
+
+function checkLoggedInStatus() {
+  fetch('/check').then(response => response.json()).then((value) => {
+    if (value.ifLoggedIn == 1) {
+      const logOutASign = document.getElementById("log");
+      logOutASign.innerText = "Log out";
+      logOutASign.href = value.url;
+    }
+    else {
+      const logInASign = document.getElementById("log");
+      logInASign.innerText = "Log in";
+      logInASign.href = value.url;
+    }
   });
 }

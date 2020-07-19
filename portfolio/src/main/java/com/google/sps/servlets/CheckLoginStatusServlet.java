@@ -19,11 +19,11 @@ public class CheckLoginStatusServlet extends HttpServlet {
     response.setContentType("application/json;");
     if (userService.isUserLoggedIn()) {
     //   User user = userService.getCurrentUser();
-      LoginStatusJson loginStatusJson = new LoginStatusJson(1, "Has logged in!");
+      LoginStatusJson loginStatusJson = new LoginStatusJson(1, userService.createLogoutURL("/"));
       String json = convertToJson(loginStatusJson);
       response.getWriter().println(json);
     } else {
-      LoginStatusJson loginStatusJson = new LoginStatusJson(0, "Please log in first!");
+      LoginStatusJson loginStatusJson = new LoginStatusJson(0, userService.createLoginURL("/"));
       String json = convertToJson(loginStatusJson);
       response.getWriter().println(json);
     }
@@ -34,7 +34,7 @@ public class CheckLoginStatusServlet extends HttpServlet {
     json += "\"ifLoggedIn\": ";
     json += loginStatusJson.getIfLoggedIn();
     json += ", ";
-    json += "\"hint\": ";
+    json += "\"url\": ";
     json += "\""+ loginStatusJson.getHint() + "\"";
     json += "}";
     return json;
@@ -44,11 +44,11 @@ public class CheckLoginStatusServlet extends HttpServlet {
 
 class LoginStatusJson {
   private final long ifLoggedIn;
-  private final String hint;
+  private final String url;
 
-  public LoginStatusJson(long ifLoggedIn, String hint) {
+  public LoginStatusJson(long ifLoggedIn, String url) {
     this.ifLoggedIn = ifLoggedIn;
-    this.hint = hint;
+    this.url = url;
   }
 
   public long getIfLoggedIn() {
@@ -56,7 +56,7 @@ class LoginStatusJson {
   }
 
   public String getHint() {
-    return hint;
+    return url;
   }
 }
 
