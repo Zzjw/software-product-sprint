@@ -85,7 +85,7 @@ public class DataServlet extends HttpServlet {
     // Get the input from the form.
     UserService userService = UserServiceFactory.getUserService();
 
-    if (userService.isUserLoggedIn()) {
+    if (!userService.isUserLoggedIn()) {
       response.sendRedirect("/login");
     }
     else {
