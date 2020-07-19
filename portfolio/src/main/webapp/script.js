@@ -65,9 +65,9 @@ function createListElement(text) {
 }
 
 function getCommentList() {
+  checkLoggedInStatus();
+  fetchBlobstoreUrlAndShowForm();
   fetch('/data').then(response => response.json()).then((comments) => {
-
-    // Build the list of history entries.
     const MyComments = document.getElementById('comment-container');
     comments.forEach((value) => {
       console.log(value);
@@ -77,6 +77,43 @@ function getCommentList() {
       commentText.innerText = ("Comment: " + value.comment);
       commentText.style.marginBottom = "20px";
       MyComments.appendChild(commentText);
+      console.log(value.imageUrl);
+      MyComments.appendChild(document.createElement("br"));
+      if (value.imageUrl != null && value.imageUrl != "") {
+        const imageElement = document.createElement("img");
+        imageElement.src = value.imageUrl;
+        imageElement.height = 100;
+        imageElement.width = 100;
+        MyComments.appendChild(imageElement);
+      }
     });
+  });
+}
+
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+      return response.text();
+  })
+  .then((imageUploadUrl) => {
+    const messageForm = document.getElementById('my-form');
+    console.log((imageUploadUrl));
+    messageForm.action = imageUploadUrl;
+    messageForm.classList.remove('hidden');
+  });
+}
+
+function checkLoggedInStatus() {
+  fetch('/check').then(response => response.json()).then((value) => {
+    if (value.ifLoggedIn == 1) {
+      const logOutASign = document.getElementById("log");
+      logOutASign.innerText = "Log out";
+      logOutASign.href = value.url;
+    }
+    else {
+      const logInASign = document.getElementById("log");
+      logInASign.innerText = "Log in";
+      logInASign.href = value.url;
+    }
   });
 }

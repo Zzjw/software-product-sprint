@@ -32,13 +32,16 @@
       <h2>COMMENT AREA</h2>
       <ul id="comment-container"></ul>
       <hr/>
-      <form action="/data" method="POST">
+      <form id="my-form" class="hidden" action="/data" method="POST" enctype="multipart/form-data">
         <p>Welcome to comment!</p>
-        <textarea name="name">input name</textarea>
+        <br/>
+        <p>Upload an image:</p>
+        <input type="file" name="image">
         <br/><br/>
         <textarea name="comment">input comment</textarea>
         <br/>
         <button>Submit</button>
+        <a id="log" >log</a>
       </form>
     </div>
   </body>
