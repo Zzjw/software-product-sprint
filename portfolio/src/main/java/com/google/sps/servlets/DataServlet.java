@@ -84,28 +84,34 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     UserService userService = UserServiceFactory.getUserService();
-    User currentUser = userService.getCurrentUser();
 
-    Date sendTime = new Date();
-//    String name = getParameter(request, "name", "");
-    String name = currentUser.getNickname();
-    String comment = getParameter(request, "comment", "Hello!");
-    String imageUrl = getUploadedFileUrl(request, "image");
+    if (userService.isUserLoggedIn()) {
+      response.sendRedirect("/login");
+    }
+    else {
+      User currentUser = userService.getCurrentUser();
 
-    System.err.println("name: " + name);
-    System.err.println("comment" + comment);
+      Date sendTime = new Date();
+  //    String name = getParameter(request, "name", "");
+      String name = currentUser.getNickname();
+      String comment = getParameter(request, "comment", "Hello!");
+      String imageUrl = getUploadedFileUrl(request, "image");
 
-    Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("name", name);
-    commentEntity.setProperty("comment", comment);
-    commentEntity.setProperty("date", sendTime);
-    commentEntity.setProperty("timestamp", System.currentTimeMillis());
-    commentEntity.setProperty("image", imageUrl);
+      System.err.println("name: " + name);
+      System.err.println("comment" + comment);
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
+      Entity commentEntity = new Entity("Comment");
+      commentEntity.setProperty("name", name);
+      commentEntity.setProperty("comment", comment);
+      commentEntity.setProperty("date", sendTime);
+      commentEntity.setProperty("timestamp", System.currentTimeMillis());
+      commentEntity.setProperty("image", imageUrl);
 
-    response.sendRedirect("/index.html");
+      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+      datastore.put(commentEntity);
+
+      response.sendRedirect("/index.html");
+    }
   }
 
   /**

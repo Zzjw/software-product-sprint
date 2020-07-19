@@ -16,7 +16,6 @@ public class CheckLoginStatusServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     UserService userService = UserServiceFactory.getUserService();
-    Gson gson = new Gson();
     response.setContentType("application/json;");
     if (userService.isUserLoggedIn()) {
     //   User user = userService.getCurrentUser();

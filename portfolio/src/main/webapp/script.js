@@ -65,39 +65,40 @@ function createListElement(text) {
 }
 
 function getCommentList() {
-  fetch('/check').then(response => response.json()).then((value) => {
-    if (value.ifLoggedIn == 1){
-      fetchBlobstoreUrlAndShowForm();
-      fetch('/data').then(response => response.json()).then((comments) => {
-        const MyComments = document.getElementById('comment-container');
-        comments.forEach((value) => {
-          console.log(value);
-          MyComments.appendChild(createListElement("Send Time: " + value.sendTime ));
-          MyComments.appendChild(createListElement("Name: " + value.name ));
-          const commentText = document.createElement('text');
-          commentText.innerText = ("Comment: " + value.comment);
-          commentText.style.marginBottom = "20px";
-          MyComments.appendChild(commentText);
-          console.log(value.imageUrl);
-          if (value.imageUrl != null && value.imageUrl != "") {
-            const imageElement = document.createElement("img");
-            imageElement.src = value.imageUrl;
-            imageElement.height = 20;
-            imageElement.width = 20;
-            MyComments.appendChild(imageElement);
-          }
-        });
-      });
-    }
-    else {
-      window.alert(value.hint);
-      window.location.href='/login';
-      // const MyComments = document.getElementById('comment-container');
-      // const hintText = document.createElement('text');
-      // hintText.innerText = value.hint;
-      // MyComments.appendChild(hintText);
-    }
+  // fetch('/check').then(response => response.json()).then((value) => {
+  //   if (value.ifLoggedIn == 1){
+  fetchBlobstoreUrlAndShowForm();
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const MyComments = document.getElementById('comment-container');
+    comments.forEach((value) => {
+      console.log(value);
+      MyComments.appendChild(createListElement("Send Time: " + value.sendTime ));
+      MyComments.appendChild(createListElement("Name: " + value.name ));
+      const commentText = document.createElement('text');
+      commentText.innerText = ("Comment: " + value.comment);
+      commentText.style.marginBottom = "20px";
+      MyComments.appendChild(commentText);
+      console.log(value.imageUrl);
+      MyComments.appendChild(document.createElement("br"));
+      if (value.imageUrl != null && value.imageUrl != "") {
+        const imageElement = document.createElement("img");
+        imageElement.src = value.imageUrl;
+        imageElement.height = 100;
+        imageElement.width = 100;
+        MyComments.appendChild(imageElement);
+      }
+    });
   });
+
+    // else {
+    //   window.alert(value.hint);
+    //   window.location.href='/login';
+    //   // const MyComments = document.getElementById('comment-container');
+    //   // const hintText = document.createElement('text');
+    //   // hintText.innerText = value.hint;
+    //   // MyComments.appendChild(hintText);
+    // }
+  // });
 }
 
 function fetchBlobstoreUrlAndShowForm() {
