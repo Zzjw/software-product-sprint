@@ -137,6 +137,7 @@ public class DataServlet extends HttpServlet {
 
   private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
     BlobKey blobKey = getBlobKey(request, formInputElementName);
+    if (blobKey == null) return "";
 
     // We could check the validity of the file here, e.g. to make sure it's an image file
     // https://stackoverflow.com/q/10779564/873165
